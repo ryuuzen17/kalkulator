@@ -1,6 +1,7 @@
 const hasil = document.getElementById('hasil')
 let tampung = ''
 let tampung2 = ''
+let flag=false
 //angka
 const angka = document.querySelectorAll('.angka')
 
@@ -9,7 +10,7 @@ const operator = document.querySelectorAll('.operator')
 
 angka.forEach(m => {
     m.addEventListener('click', function () {
-        container(m.value)
+        container(m.value,false)
     })
 })
 operator.forEach(m => {
@@ -17,9 +18,19 @@ operator.forEach(m => {
         container(m.value)
     })
 })
-function container(m) {
-    tampung += m
-    tampung2 = tampung
+function container(m,flag2) {
+    if(flag2==true){
+        tampung+=m
+        flag=true
+    }else if(flag2==undefined){
+        tampung+=m
+        flag=false
+    }else{
+        if(flag==true){
+            tampung=''
+        }tampung += m
+        flag=false
+    }tampung2 = tampung
     hasil.innerHTML = tampung
     const samaDengan = document.getElementById('samaDengan')
     const reset = document.getElementById('reset')
@@ -35,6 +46,7 @@ function container(m) {
             } else {
                 hasil.innerHTML = cek
                 tampung = ''
+                container(cek,true)
             }
         } catch (error) {
             hasil.innerHTML = 'Error,silakan coba lagi!'
